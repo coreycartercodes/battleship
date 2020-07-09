@@ -25,7 +25,7 @@ class BoardTest < Minitest::Test
   def test_cell_coordinates_all_in_board
     columns = (1..4).to_a
     rows = ("A".."D").to_a
-    # binding.pry
+
     @board.cells.keys.each do |coordinate|
       assert rows.include?(coordinate[0])
       assert columns.include?(coordinate[1..-1].to_i)
@@ -46,7 +46,7 @@ class BoardTest < Minitest::Test
   end
 
   def test_valid_placement_length
-    skip
+    # skip
     assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2"])
     assert_equal false, @board.valid_placement?(@submarine, ["A2", "A3", "A4"])
     assert_equal true, @board.valid_placement?(@cruiser, ["A2", "A3", "A4"])
@@ -55,12 +55,17 @@ class BoardTest < Minitest::Test
   def test_consecutive_coordinates
     skip
     assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2", "A4"])
-
   end
 
   def test_valid_placement_not_diagonal
     skip
     assert_equal false, @board.valid_placement?(@cruiser, ["A1", "B2", "C3"])
+  end
 
+  def test_coordinate_already_has_ship
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+
+    assert_equal false, @board.valid_placement?(@submarine, ["A1", "B2"])
+    assert_equal true, @board.valid_placement?(@submarine, ["B1", "B2"])
   end
 end

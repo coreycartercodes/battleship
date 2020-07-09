@@ -31,6 +31,8 @@ class Board
       false
     elsif invalid_coordinate(coordinate_array)
       false
+    elsif coordinate_already_has_ship(coordinate_array)
+      false
     else
       true
     end
@@ -45,7 +47,20 @@ class Board
     coordinate_array.any? {|coordinate| !valid_coordinate?(coordinate)}
   end
 
+  def coordinate_already_has_ship(coordinate_array)
+    coordinate_array.any? {|coordinate| @cells[coordinate].ship}
+  end
 
+  def place(ship, coordinate_array)
+    if valid_placement?(ship, coordinate_array)
+      coordinate_array.each do |coordinate|
+        @cells[coordinate].place_ship(ship)
+      end
+      true
+    else
+      false
+    end
+  end
 end
 ################ Needs Fixed as part of Valid Placement
 #   def coord_array_setup
