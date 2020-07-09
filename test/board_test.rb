@@ -1,4 +1,3 @@
-# Board Test Setup
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/ship'
@@ -7,87 +6,56 @@ require './lib/board'
 require 'pry'
 
 class BoardTest < Minitest::Test
-
   def setup
-    @board = Board.new
+    @cruiser = Ship.new("Cruiser", 3)
+    @submarine = Ship.new("Submarine", 2)
+    # ships_used = [@cruiser, @submarine]
+
+    @board = Board.new(4, 4)
   end
 
   def test_it_exists
     assert_instance_of Board, @board
   end
 
-  def test_it_has_cells
-    assert_equal 'A1', @board.cells[:"A1"].coordinate
+  def test_has_correct_number_cells
+    assert_equal 16, @board.cells.keys.length
+  end
+
+  def test_cell_coordinates_all_in_board
+    columns = (1..4).to_a
+    rows = ("A".."D").to_a
+    # binding.pry
+    @board.cells.keys.each do |coordinate|
+      assert rows.include?(coordinate[0])
+      assert columns.include?(coordinate[1..-1].to_i)
+    end
   end
 
   def test_valid_coordinate
-
-    assert_equal true, @board.valid_coordinate?('A1')
-    refute @board.valid_coordinate?('Z1')
+    assert_equal true, @board.valid_coordinate?("A1")
+    assert_equal true, @board.valid_coordinate?("D4")
+    assert_equal false, @board.valid_coordinate?("A5")
+    assert_equal false, @board.valid_coordinate?("E1")
+    assert_equal false, @board.valid_coordinate?("A22")
   end
 
   def test_valid_placement_length
-    cruiser = Ship.new("Cruiser", 3)
-    submarine = Ship.new("Submarine", 2)
+    skip
+    assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2"])
+    assert_equal false, @board.valid_placement?(@submarine, ["A2", "A3", "A4"])
+    assert_equal true, @board.valid_placement?(@cruiser, ["A2", "A3", "A4"])
+  end
 
-    refute @board.valid_placement?(cruiser, ["A1", "A2"])
+  def test_consecutive_coordinates
+    skip
+    assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2", "A4"])
 
   end
 
-####
-  def test_valid_placement
-    cruiser = Ship.new("Cruiser", 3)
-    submarine = Ship.new("Submarine", 2)
-
-    assert @board.valid_placement?(cruiser, ["A1", "A2", "A3"])
-    assert @board.valid_placement?(cruiser, ["B2", "C2", "D2"])
-
-    refute @board.valid_placement?(cruiser, ["A1", "A2"])
-    refute @board.valid_placement?(submarine, ["A1", "A2", "A3"])
-    refute @board.valid_placement?(cruiser, ["A1", "B2", "C3"])
+  def test_valid_placement_not_diagonal
+    skip
+    assert_equal false, @board.valid_placement?(@cruiser, ["A1", "B2", "C3"])
 
   end
-
-  def test_place_ship_on_board
-    cruiser = Ship.new("Cruiser", 3)
-    submarine = Ship.new("Submarine", 2)
-    cell_1 = @board.cells[:"A1"]
-    cell_2 = @board.cells[:"A2"]
-    cell_3 = @board.cells[:"A3"]
-
-
-    @board.place(cruiser, ["A1", "A2", "A3"])
-
-    assert_equal cruiser, cell_1.ship
-    assert_equal cruiser, cell_2.ship
-    assert_equal cruiser, cell_3.ship
-  end
-
-#   def test_valid_placement_consecutive_row
-#     cruiser = Ship.new("Cruiser", 3)
-#     submarine = Ship.new("Submarine", 2)
-#
-#     assert @board.row_subset_of_range?
-#
-#   end
-#
-# ####
-#   def test_valid_placement_consecutive_column
-#     cruiser = Ship.new("Cruiser", 3)
-#     submarine = Ship.new("Submarine", 2)
-#
-#     assert @board.col_subset_of_range?
-#
-#   end
-#
-# #####
-#   def test_valid_placement_not_diagonal
-#     cruiser = Ship.new("Cruiser", 3)
-#     submarine = Ship.new("Submarine", 2)
-#
-#
-#
-#   end
-
-
 end
