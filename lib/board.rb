@@ -10,11 +10,11 @@ class Board
 
   def build_cells
     cell_hash = {}
-    number_range = 1..@columns
-    letter_range = "A"..(("A".ord)+ @rows - 1).chr
+    @number_range = 1..@columns
+    @letter_range = "A"..(("A".ord)+ @rows - 1).chr
 
-    number_range.each do |number|
-      letter_range.each do |letter|
+    @number_range.each do |number|
+      @letter_range.each do |letter|
         coordinate = letter + number.to_s
         cell_hash[coordinate] = Cell.new(coordinate)
       end
@@ -26,24 +26,14 @@ class Board
     @cells.keys.to_s.include?(coordinate_param)
   end
 
-  def valid_placement?(ship, coordinate_array)
-    return false if different_lengths(ship, coordinate_array)
-    # return false if
-    return true
-
-  end
-
-  def different_lengths(ship, coordinate_array)
-    ship.length != coordinate_array.length
-  end
 ################ Needs Fixed as part of Valid Placement
   def coord_array_setup
-    @range_row_array = ("A".."D").to_a
-    @range_col_array = ("1".."4").to_a
-    @row_array = @spaces_array.map do |space|
+    @range_row_array = @number_range.to_a
+    @range_col_array = @letter_range.to_a
+    @row_array = @coordinate_array.map do |space|
       space.to_str[0]
     end
-    @col_array = @spaces_array.map do |space|
+    @col_array = @coordinate_array.map do |space|
       space.to_str[1]
     end
   end
@@ -72,32 +62,35 @@ class Board
     end
   end
 
-  def valid_placement?(ship, spaces_array)
-    @spaces_array = spaces_array
-    if ship.length != @spaces_array.length
+
+  def different_lengths
+    @ship.length != @coordinate_array.length
+  end
+
+  def invalid_coordinate_array
+  end
+
+  def valid_placement?(ship, coordinate_array)
+    @ship = ship
+    @coordinate_array = coordinate_array
+    if different_lengths
+      false
+    elsif invalid_coordinate_array
       false
     else
       consecutive_spaces
     end
   end
+
   def place(ship, spaces_array)
-    @spaces_array = spaces_array
+    @coordinate_array = _array
     @ship = ship
-    @spaces_array.each do |key|
+    @coordinate_array.each do |key|
       @cells[key.to_sym].place_ship(ship)
     end
   end
 end
 #######################################################
-# def place(ship, spaces_array)
-#   @spaces_array = spaces_array
-#   @ship = ship
-#
-#   @spaces_array.each do |key|
-#     @cells[key.to_sym].place_ship(ship)
-#   end
-#
-# end
 
 # def coordinate_already_hold_ship(spaces_array)
 #   spaces_array.any? {|coordinate| @cells[coordinate].ship}
