@@ -26,7 +26,6 @@ class Board
     @cells.keys.to_s.include?(coordinate_param)
   end
 
-################ Needs Fixed as part of Valid Placement
   def coord_array_setup
     @range_row_array = @number_range.to_a
     @range_col_array = @letter_range.to_a
@@ -45,53 +44,55 @@ class Board
   def col_subset_of_range?
     cross_ref_col = @range_col_array & @col_array
     cross_ref_col.sort == @col_array
-  end
-  ### notes: all?.each_cons
-  def consecutive_spaces
-    coord_array_setup
-    case row_subset_of_range?
-    when true
-      @col_array.all? {|value| value == @col_array[0]}
-    else
-      case col_subset_of_range?
-      when true
-        @row_array.all? {|value| value == @row_array[0]}
-      else
-        false
-      end
-    end
-  end
+    
+#    def consecutive_spaces
+#     coord_array_setup
+#     case row_subset_of_range?
+#     when true
+#       @col_array.all? {|value| value == @col_array[0]}
+#     else
+#       case col_subset_of_range?
+#       when true
+#         @row_array.all? {|value| value == @row_array[0]}
+#       else
+#         false
+#       end
+#     end
+#   end
 
-
-  def different_lengths
-    @ship.length != @coordinate_array.length
-  end
-
-  def invalid_coordinate_array
-  end
-
+  
   def valid_placement?(ship, coordinate_array)
-    @ship = ship
-    @coordinate_array = coordinate_array
-    if different_lengths
+    if different_lengths(ship, coordinate_array)
       false
-    elsif invalid_coordinate_array
+    elsif invalid_coordinate(coordinate_array)
+      false
+    elsif coordinate_already_has_ship(coordinate_array)
       false
     else
       consecutive_spaces
     end
+
   end
 
-  def place(ship, spaces_array)
-    @coordinate_array = _array
-    @ship = ship
-    @coordinate_array.each do |key|
-      @cells[key.to_sym].place_ship(ship)
+  def different_lengths(ship, coordinate_array)
+    ship.length != coordinate_array.length
+  end
+
+  def invalid_coordinate(coordinate_array)
+    coordinate_array.any? {|coordinate| !valid_coordinate?(coordinate)}
+  end
+
+  def coordinate_already_has_ship(coordinate_array)
+    coordinate_array.any? {|coordinate| @cells[coordinate].ship}
+  end
+
+  def place(ship, coordinate_array)
+    if valid_placement?(ship, coordinate_array)
+      coordinate_array.each do |coordinate|
+        @cells[coordinate].place_ship(ship)
+      end
+      true
+    else
+      false
     end
   end
-end
-#######################################################
-
-# def coordinate_already_hold_ship(spaces_array)
-#   spaces_array.any? {|coordinate| @cells[coordinate].ship}
-# end
