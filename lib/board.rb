@@ -76,26 +76,14 @@ end
     end
   end
 
-  #####TEST
-# spaces_array = ["A1", "A2", "A3"]
-#   row_array = spaces_array.map do |space|
-#     space.to_str[0]
-#   end
-#   col_array = spaces_array.map do |space|
-#     space.to_str[1]
-#   end
-#
-#     p row_array
-#     p col_array
-#
-# range_row_array = ("A".."D").to_a
-# range_col_array = ("1".."4").to_a
-#
-# p cross_ref_row = range_row_array & row_array
-# p cross_ref_row.sort == row_array
-#
-# p cross_ref_col = range_col_array & col_array
-# p cross_ref_col.sort == col_array
+  def place(ship, spaces_array)
+    @spaces_array = spaces_array
+    @ship = ship
 
+    @spaces_array.each do |key|
+      @cells[key.to_sym].place_ship(ship)
+    end
+
+  end
 
 end
