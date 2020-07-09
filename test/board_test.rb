@@ -40,6 +40,11 @@ class BoardTest < Minitest::Test
     assert_equal false, @board.valid_coordinate?("A22")
   end
 
+  def test_invalid_coordinate
+    assert_equal false, @board.invalid_coordinate(["A1", "A2", "A3"])
+    assert_equal true, @board.invalid_coordinate(["D3", "D4", "D5"])
+  end
+
   def test_valid_placement_length
     skip
     assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2"])
