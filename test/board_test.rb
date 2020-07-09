@@ -65,6 +65,8 @@ class BoardTest < Minitest::Test
   def test_coordinate_already_has_ship
     @board.place(@cruiser, ["A1", "A2", "A3"])
 
+    assert_equal true, @board.coordinate_already_has_ship(["A1", "B2"])
+    refute @board.coordinate_already_has_ship(["A1", "B2"])
     assert_equal false, @board.valid_placement?(@submarine, ["A1", "B2"])
     assert_equal true, @board.valid_placement?(@submarine, ["B1", "B2"])
   end
