@@ -10,8 +10,8 @@ class Board
 
   def build_cells
     cell_hash = {}
-    @number_range = 1..@columns
-    @letter_range = "A"..(("A".ord)+ @rows - 1).chr
+    @number_range = 1..@rows
+    @letter_range = "A"..(("A".ord)+ @columns - 1).chr
 
     @number_range.each do |number|
       @letter_range.each do |letter|
@@ -27,8 +27,8 @@ class Board
   end
 
   def coord_array_setup
-    @board_row_array = @number_range.to_a
-    @board_col_array = @letter_range.to_a
+    @board_row_array = @letter_range.to_a
+    @board_col_array = @number_range.to_a
     @row_array = @coordinate_array.map do |space|
       space.to_str[0]
     end
@@ -48,11 +48,10 @@ class Board
 
   ###### .ord?
   def array_increments?(coordinate_array)
-    sorted = coordinate_array.sort
-    lastNum = sorted[0]
-    sorted[1, sorted.count].each do |n|
-      return false if lastNum + 1 != n
-      lastNum = n
+    first_num = coordinate_array[0]
+    coordinate_array[1, coordinate_array.count].each do |n|
+      return false if first_num + 1 != n
+      first_num = n
     end
     true
   end
