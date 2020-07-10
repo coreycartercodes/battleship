@@ -36,17 +36,7 @@ class Board
       space.to_str[1].to_i
     end
   end
-
-  # def row_subset_of_board?
-  #   if all_equal?(col_array)
-  #   cross_ref_row.sort == @row_array
-  # end
-  # def col_subset_of_board?
-  #   cross_ref_col = @board_col_array & @col_array
-  #   cross_ref_col.sort == @col_array
-  # end
-
-  ###### .ord?
+  
   def array_increments?(coordinate_array)
     first_num = coordinate_array[0]
     coordinate_array[1, coordinate_array.count].each do |n|
@@ -86,6 +76,27 @@ class Board
 
     end
 
+  end
+
+#   def render_helper
+#     if @cell.ship == nil
+#       p "M"
+#     elsif @cell.ship
+#   end
+#
+#   def render(show_ships = false )
+#     if @cell.fired_upon? == false
+#       if show_ships == true
+#         p "S"
+#       else
+#         p "."
+#       end
+#     else
+#     end
+#   end
+# end
+
+
     def different_lengths(ship, coordinate_array)
       ship.length != coordinate_array.length
     end
@@ -112,3 +123,4 @@ class Board
 
 
 end
+
