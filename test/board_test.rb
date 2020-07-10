@@ -9,9 +9,7 @@ class BoardTest < Minitest::Test
   def setup
     @cruiser = Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2)
-    # ships_used = [@cruiser, @submarine]
-
-    @board = Board.new(4, 4)
+    @board = Board.new
   end
 
   def test_it_exists
@@ -33,41 +31,41 @@ class BoardTest < Minitest::Test
   end
 
   def test_valid_coordinate
-    assert_equal true, @board.valid_coordinate?("A1")
-    assert_equal true, @board.valid_coordinate?("D4")
-    assert_equal false, @board.valid_coordinate?("A5")
-    assert_equal false, @board.valid_coordinate?("E1")
-    assert_equal false, @board.valid_coordinate?("A22")
+    assert @board.valid_coordinate?("A1")
+    assert @board.valid_coordinate?("D4")
+    refute @board.valid_coordinate?("A5")
+    refute @board.valid_coordinate?("E1")
+    refute @board.valid_coordinate?("A22")
   end
 
   def test_invalid_coordinate
-    assert_equal false, @board.invalid_coordinate(["A1", "A2", "A3"])
-    assert_equal true, @board.invalid_coordinate(["D3", "D4", "D5"])
+    refute @board.invalid_coordinate(["A1", "A2", "A3"])
+    assert @board.invalid_coordinate(["D3", "D4", "D5"])
+    refute @board.valid_placement?(@cruiser, ["Z1", "Z2", "Z3"])
   end
 
   def test_valid_placement_length
-    # skip
-    assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2"])
-    assert_equal false, @board.valid_placement?(@submarine, ["A2", "A3", "A4"])
-    assert_equal true, @board.valid_placement?(@cruiser, ["A2", "A3", "A4"])
+    refute @board.valid_placement?(@cruiser, ["A1", "A2"])
+    refute @board.valid_placement?(@submarine, ["A2", "A3", "A4"])
+    assert @board.valid_placement?(@cruiser, ["A2", "A3", "A4"])
   end
 
   def test_consecutive_coordinates
-    skip
-    assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2", "A4"])
+    refute @board.valid_placement?(@cruiser, ["A1", "A2", "A4"])
+    refute @board.valid_placement?(@cruiser, ["A2", "A1", "A4"])
+    refute @board.valid_placement?(@cruiser, ["A3", "A2", "A1"])
   end
 
   def test_valid_placement_not_diagonal
-    skip
-    assert_equal false, @board.valid_placement?(@cruiser, ["A1", "B2", "C3"])
+    refute @board.valid_placement?(@cruiser, ["A1", "B2", "C3"])
   end
 
   def test_coordinate_already_has_ship
     @board.place(@cruiser, ["A1", "A2", "A3"])
 
-    assert_equal true, @board.coordinate_already_has_ship(["A1", "B2"])
-    refute @board.coordinate_already_has_ship(["A1", "B2"])
-    assert_equal false, @board.valid_placement?(@submarine, ["A1", "B2"])
-    assert_equal true, @board.valid_placement?(@submarine, ["B1", "B2"])
+    assert @board.coordinate_already_has_ship(["A1", "B2"])
+    refute @board.coordinate_already_has_ship(["B1", "B2"])
+    refute @board.valid_placement?(@submarine, ["A1", "A2"])
+    assert @board.valid_placement?(@submarine, ["B1", "B2"])
   end
 end
