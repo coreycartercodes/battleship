@@ -44,7 +44,7 @@ class Board
   def col_subset_of_range?
     cross_ref_col = @range_col_array & @col_array
     cross_ref_col.sort == @col_array
-    
+  end
 #    def consecutive_spaces
 #     coord_array_setup
 #     case row_subset_of_range?
@@ -60,7 +60,7 @@ class Board
 #     end
 #   end
 
-  
+
   def valid_placement?(ship, coordinate_array)
     if different_lengths(ship, coordinate_array)
       false
@@ -69,9 +69,9 @@ class Board
     elsif coordinate_already_has_ship(coordinate_array)
       false
     else
-      consecutive_spaces
+      #consecutive_spaces
+      true
     end
-
   end
 
   def different_lengths(ship, coordinate_array)
@@ -96,3 +96,21 @@ class Board
       false
     end
   end
+
+#   def render_helper
+#     if @cell.ship == nil
+#       p "M"
+#     elsif @cell.ship
+#   end
+#
+#   def render(show_ships = false )
+#     if @cell.fired_upon? == false
+#       if show_ships == true
+#         p "S"
+#       else
+#         p "."
+#       end
+#     else
+#     end
+#   end
+# end
