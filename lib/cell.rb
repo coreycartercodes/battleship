@@ -23,7 +23,7 @@ class Cell
   def fire_upon
     case ship
     when nil
-              #May need to add "Miss" here
+      #May need to add "Miss" here
       @fired_upon = true
     else
       @fired_upon = true
@@ -32,33 +32,33 @@ class Cell
 
   end
 
-def render_fire_upon_helper
-  case ship
-  when nil
-    p "M"
-  else
-    if ship.sunk?
-      p "X"
+  def render_fire_upon_helper
+    case ship
+    when nil
+      "M"
     else
-      p "H"
+      if ship.sunk?
+        "X"
+      else
+        "H"
+      end
     end
   end
-end
 
   def render(show_ships = false)
     case @fired_upon
     when false
       if ship == nil
-        p "."
+        "."
       else
         if show_ships == true
-          p "S"
+          "S"
         else
-          p "."
+          "."
         end
       end
     else
-    render_fire_upon_helper
+      render_fire_upon_helper
     end
   end
 
