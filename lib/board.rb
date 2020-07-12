@@ -10,8 +10,8 @@ class Board
 
   def build_cells
     cell_hash = {}
-    @number_range = 1..@rows
-    @letter_range = "A"..(("A".ord)+ @columns - 1).chr
+    @number_range = 1..@columns
+    @letter_range = "A"..(("A".ord)+ @rows - 1).chr
 
     @number_range.each do |number|
       @letter_range.each do |letter|
@@ -36,7 +36,7 @@ class Board
       space.to_str[1].to_i
     end
   end
-  
+
   def array_increments?(coordinate_array)
     first_num = coordinate_array[0]
     coordinate_array[1, coordinate_array.count].each do |n|
@@ -50,77 +50,55 @@ class Board
     coordinate_array.uniq.size <= 1
   end
 
-    def consecutive_spaces
-      coord_array_setup
-      if all_equal?(@col_array)
-        true if array_increments?(@row_array)
-      elsif array_increments?(@col_array)
-        true if all_equal?(@row_array)
-      else
-        false
-      end
+  def consecutive_spaces
+    coord_array_setup
+    if all_equal?(@col_array)
+      true if array_increments?(@row_array)
+    elsif array_increments?(@col_array)
+      true if all_equal?(@row_array)
+    else
+      false
     end
-
-
-    def valid_placement?(ship, coordinate_array)
-      @coordinate_array = coordinate_array
-      if different_lengths(ship, coordinate_array)
-        false
-      elsif invalid_coordinate(coordinate_array)
-        false
-      elsif coordinate_already_has_ship(coordinate_array)
-        false
-      else
-        consecutive_spaces
-      end
-
-    end
-
   end
 
-#   def render_helper
-#     if @cell.ship == nil
-#       p "M"
-#     elsif @cell.ship
-#   end
-#
-#   def render(show_ships = false )
-#     if @cell.fired_upon? == false
-#       if show_ships == true
-#         p "S"
-#       else
-#         p "."
-#       end
-#     else
-#     end
-#   end
-# end
-
-
-    def different_lengths(ship, coordinate_array)
-      ship.length != coordinate_array.length
+  def valid_placement?(ship, coordinate_array)
+    @coordinate_array = coordinate_array
+    if different_lengths(ship, coordinate_array)
+      false
+    elsif invalid_coordinate_array(coordinate_array)
+      false
+    elsif coordinate_already_has_ship(coordinate_array)
+      false
+    else
+      consecutive_spaces
     end
+  end
 
-    ######## might consider adding invalid_coordinate_array to distinguish from valid_coordinate
-    def invalid_coordinate(coordinate_array)
-      coordinate_array.any? {|coordinate| !valid_coordinate?(coordinate)}
-    end
+  def different_lengths(ship, coordinate_array)
+    ship.length != coordinate_array.length
+  end
 
-    def coordinate_already_has_ship(coordinate_array)
-      coordinate_array.any? {|coordinate| @cells[coordinate].ship}
-    end
+  def invalid_coordinate_array(coordinate_array)
+    coordinate_array.any? {|coordinate| !valid_coordinate?(coordinate)}
+  end
 
-    def place(ship, coordinate_array)
-      if valid_placement?(ship, coordinate_array)
-        coordinate_array.each do |coordinate|
-          @cells[coordinate].place_ship(ship)
-        end
-        true
-      else
-        false
+  def coordinate_already_has_ship(coordinate_array)
+    coordinate_array.any? {|coordinate| @cells[coordinate].ship}
+  end
+
+  def place(ship, coordinate_array)
+    if valid_placement?(ship, coordinate_array)
+      coordinate_array.each do |coordinate|
+        @cells[coordinate].place_ship(ship)
       end
     end
+  end
 
-
+  def render(show_ships = false)
+    if show_ships == true
+       return " 1 2 3 4 \nA #{@cells["A1"].render(true)} #{@cells["A2"].render(true)} #{@cells["A3"].render(true)} #{@cells["A4"].render(true)} \nB #{@cells["B1"].render(true)} #{@cells["B2"].render(true)} #{@cells["B3"].render(true)} #{@cells["B4"].render(true)} \nC #{@cells["C1"].render(true)} #{@cells["C2"].render(true)} #{@cells["C3"].render(true)} #{@cells["C4"].render(true)} \nD #{@cells["D1"].render(true)} #{@cells["D2"].render(true)} #{@cells["D3"].render(true)} #{@cells["D4"].render(true)}"
+    else
+        return " 1 2 3 4 \nA #{@cells["A1"].render} #{@cells["A2"].render} #{@cells["A3"].render} #{@cells["A4"].render} \nB #{@cells["B1"].render} #{@cells["B2"].render} #{@cells["B3"].render} #{@cells["B4"].render} \nC #{@cells["C1"].render} #{@cells["C2"].render} #{@cells["C3"].render} #{@cells["C4"].render} \nD #{@cells["D1"].render} #{@cells["D2"].render} #{@cells["D3"].render} #{@cells["D4"].render}"
+    end
+  end
 end
-

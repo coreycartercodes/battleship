@@ -38,9 +38,9 @@ class BoardTest < Minitest::Test
     refute @board.valid_coordinate?("A22")
   end
 
-  def test_invalid_coordinate
-    refute @board.invalid_coordinate(["A1", "A2", "A3"])
-    assert @board.invalid_coordinate(["D3", "D4", "D5"])
+  def test_invalid_coordinate_array
+    refute @board.invalid_coordinate_array(["A1", "A2", "A3"])
+    assert @board.invalid_coordinate_array(["D3", "D4", "D5"])
     refute @board.valid_placement?(@cruiser, ["Z1", "Z2", "Z3"])
   end
 
@@ -85,9 +85,36 @@ class BoardTest < Minitest::Test
   end
 
   def test_board_render
-    skip
-    @board.place(cruiser, ["A1", "A2", "A3"])
+    @board.place(@cruiser, ["A1", "A2", "A3"])
 
+    normal_render = " 1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . ."
+    assert_equal normal_render, @board.render
 
+    @board.cells["A1"].fire_upon
+    @board.cells["A2"].fire_upon
+
+    hit_render = " 1 2 3 4 \nA H H . . \nB . . . . \nC . . . . \nD . . . ."
+    assert_equal hit_render, @board.render
+
+    @board.cells["A3"].fire_upon
+    sunk_render = " 1 2 3 4 \nA X X X . \nB . . . . \nC . . . . \nD . . . ."
+    assert_equal sunk_render, @board.render
+
+    @board.cells["B3"].fire_upon
+    miss_render = " 1 2 3 4 \nA X X X . \nB . . M . \nC . . . . \nD . . . ."
+    assert_equal miss_render, @board.render
+  end
+
+  def test_board_render_true
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+
+    normal_render = " 1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . ."
+    assert_equal normal_render, @board.render(true)
+
+    @board.cells["A1"].fire_upon
+    @board.cells["A2"].fire_upon
+
+    hit_render = " 1 2 3 4 \nA H H S . \nB . . . . \nC . . . . \nD . . . ."
+    assert_equal hit_render, @board.render(true)
   end
 end
