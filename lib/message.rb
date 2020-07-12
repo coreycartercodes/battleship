@@ -46,11 +46,40 @@ class Message
   end
 
   def shot_result(coordinate, board)
-
-
+    case board.cells[coordinate].render
+    when "M"
+      " was a miss."
+    when "H"
+      " hit a ship!"
+    when "X"
+      " sunk a ship!" #should we add ship name here?
+    end
   end
+
   def cpu_result(coordinate, board)
     p "My shot on " + coordinate + shot_result(coordinate, board)
-
   end
+
+  def player_result(coordinate, board)
+    p "Your shot on " + coordinate + shot_result(coordinate, board)
+  end
+
+  def player_win
+    p "Congrats, you beat a computer. Would you like a medal?"
+  end
+
+  def cpu_win
+    p "Suck it, I won! Let's play again!"
+  end
+
+  def cpu_board(cpu)
+    p "=============COMPUTER BOARD============="
+    p cpu.render
+  end
+
+  def player_board(player)
+    p "==============PLAYER BOARD=============="
+    p player.render(true)
+  end
+
 end
