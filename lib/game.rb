@@ -1,10 +1,13 @@
 require 'pry'
+require './lib/player'
 
 class Game
+  attr_reader :player, :computer
 
-  # def initialize
-  #
-  # end
+  def initialize
+    @player = Player.new
+    @computer= Player.new
+  end
 
   def main_menu
     # need to pull in welcome_message from Message class
@@ -19,9 +22,5 @@ class Game
 
   def game_setup
   end
-
-
-
-
 
 end
