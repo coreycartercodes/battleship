@@ -24,13 +24,13 @@ class Game
     if input == 'p'
       #computer_place_ships
       player_place_ships
-      #turn
+      turn
     elsif input == 'q'
       puts "Okay, quitter \u{1f644}"
       exit
     else
       puts  "You don't listen to directions, huh? Try again."
-      puts "   "
+      puts "\u{1f644} \u{1f644} \u{1f644}"
       main_menu
     end
   end
@@ -67,14 +67,20 @@ class Game
       puts @player_board.render(true)
     else
       puts "Those are invalid coordinates. Please try again: "
-      print "\u{1f6a2}  "
+      puts "\u{1f644} \u{1f644} \u{1f644}"
       player_submarine
     end
   end
 
   def turn
     display_boards
-
+    player_turn
+    # computer_turn
+    if @computer_ships["Cruiser"].sunk? && @computer_ships["Submarine"].sunk?
+      puts "You beat a computer *woooooow*"
+      puts "You won: game over"
+      exit
+    end 
   end
 
   def display_boards
@@ -85,8 +91,31 @@ class Game
     puts @player_board.render(true)
   end
 
-  # def player_turn
-  #   puts
-  # end
+  def player_turn
+    puts "Enter the coordinate for your shot...choose wisely!"
+    print "\u{1f6a2}  "
+
+    input = gets.chomp.upcase.to_s
+    if input != @board.valid_coordinate?(input)
+      puts "#{input} is not a valid coordinate"
+      puts "Let's try this again"
+      puts "\u{1f644} \u{1f644} \u{1f644}"
+      player_turn
+    elsif @computer_board.cells[input].fired_upon?
+      puts "You have already fired upon this spot. TRY AGAIN"
+      puts "\u{1f644} \u{1f644} \u{1f644}"
+      player_turn
+    else
+      @computer_board.cells[input].fire_upon
+      if @computer_board.cells[input].render == "M"
+        puts "Your shot on #{input} was a...MISS"
+      elsif @computer_board.cells[input].render == "H"
+        puts "Your shot on #{input} was a hit...lucky guess"
+      elsif @computer_board.cells[input].render == "X"
+        puts "Welp. Your shot on #{input} sunk my ship."
+        puts "I hope you're happy \u{1f62d}"
+      end
+    end
+  end
 
 end
