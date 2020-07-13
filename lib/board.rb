@@ -27,8 +27,6 @@ class Board
   end
 
   def coord_array_setup
-    @board_row_array = @letter_range.to_a
-    @board_col_array = @number_range.to_a
     @row_array = @coordinate_array.map do |space|
       space.to_str[0]
     end
@@ -36,6 +34,16 @@ class Board
       space.to_str[1].to_i
     end
   end
+
+
+#   def array_increments?(coordinate_array)
+#     first_num = coordinate_array[0].ord
+#     coordinate_array[1, coordinate_array.count].each do |n|
+#       return false if first_num + 1 != n
+#       first_num = n
+#     end
+#     true
+#   end
 
   def horizontal?(coordinate_array)
     @coordinate_array.map {|coordinate| coordinate[0]}.uniq.count == 1
@@ -98,4 +106,5 @@ class Board
         return "  1 2 3 4 \nA #{@cells["A1"].render} #{@cells["A2"].render} #{@cells["A3"].render} #{@cells["A4"].render} \nB #{@cells["B1"].render} #{@cells["B2"].render} #{@cells["B3"].render} #{@cells["B4"].render} \nC #{@cells["C1"].render} #{@cells["C2"].render} #{@cells["C3"].render} #{@cells["C4"].render} \nD #{@cells["D1"].render} #{@cells["D2"].render} #{@cells["D3"].render} #{@cells["D4"].render}"
     end
   end
+
 end

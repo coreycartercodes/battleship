@@ -1,5 +1,15 @@
 require 'pry'
+require './lib/player'
+
 class Game
+
+  #### Corey's Player Class usage
+#   attr_reader :player, :computer
+#   def initialize
+#     @player = Player.new
+#     @computer= Player.new
+#   end
+  ####
 
   attr_reader :player_board, :computer_board, :player_ships, :computer_ships
 
@@ -117,5 +127,6 @@ class Game
       end
     end
   end
+
 
 end
