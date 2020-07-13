@@ -67,13 +67,13 @@ class Game
 
   def turn
     display_boards
-    player_turn
-    # computer_turn
+    @computer.player_turn
     if @computer.cruiser.sunk? && @computer.submarine.sunk?
       puts "You beat a computer *woooooow*"
       puts "You won: game over"
       exit
     end
+    #@player.computer_turn
   end
 
   def display_boards
@@ -84,32 +84,7 @@ class Game
     puts @player.board.render(true)
   end
 
-  def player_turn
-    puts "Enter the coordinate for your shot...choose wisely!"
-    print "\u{1f6a2}  "
 
-    input = gets.chomp.upcase.to_s
-    if @computer.board.valid_coordinate?(input) == false
-      puts "#{input} is not a valid coordinate"
-      puts "Let's try this again"
-      puts "\u{1f644} \u{1f644} \u{1f644}"
-      player_turn
-    elsif @computer.board.cells[input].fired_upon?
-      puts "You have already fired upon this spot. TRY AGAIN"
-      puts "\u{1f644} \u{1f644} \u{1f644}"
-      player_turn
-    else
-      @computer.board.cells[input].fire_upon
-      if @computer.board.cells[input].render == "M"
-        puts "Your shot on #{input} was a...MISS"
-      elsif @computer.board.cells[input].render == "H"
-        puts "Your shot on #{input} was a hit...lucky guess"
-      elsif @computer.board.cells[input].render == "X"
-        puts "Welp. Your shot on #{input} sunk my ship."
-        puts "I hope you're happy \u{1f62d}"
-      end
-    end
-  end
 
 
 end
