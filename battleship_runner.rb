@@ -2,11 +2,12 @@ require './lib/ship'
 require './lib/cell'
 require './lib/board'
 require './lib/game'
+require './lib/player'
 require 'pry'
 
 game = Game.new
 
-@game.main_menu
+game.main_menu
 
 ### USED TO TEST RENDERING
 puts game.computer.board.render
