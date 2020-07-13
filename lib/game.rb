@@ -52,7 +52,6 @@ class Game
     puts "You now need to lay out your two ships."
     puts "The Cruiser is three units long and the Submarine is two units long"
     puts @player.board.render(true)
-    player_cruiser
   end
 
   def player_cruiser
@@ -67,7 +66,6 @@ class Game
       print "\u{1f6a2}  "
       player_cruiser
     end
-    player_submarine
   end
 
   def player_submarine
@@ -86,7 +84,7 @@ class Game
 
   def turn
     display_boards
-    player_turn_message
+    player_turn
     # computer_turn
     if @computer.cruiser.sunk? && @computer.submarine.sunk?
       puts "You beat a computer *woooooow*"
@@ -97,18 +95,18 @@ class Game
 
   def display_boards
     puts "=============COMPUTER BOARD============="
-    #puts @computer.board.render
+    puts @computer.board.render
     puts "                "
     puts "==============PLAYER BOARD=============="
     puts @player.board.render(true)
   end
 
-  def player_turn_message
+  def player_turn
     puts "Enter the coordinate for your shot...choose wisely!"
     print "\u{1f6a2}  "
 
     input = gets.chomp.upcase.to_s
-    if input != @board.valid_coordinate?(input)
+    if @computer.board.valid_coordinate?(input) == false
       puts "#{input} is not a valid coordinate"
       puts "Let's try this again"
       puts "\u{1f644} \u{1f644} \u{1f644}"
