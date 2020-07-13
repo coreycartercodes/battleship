@@ -1,108 +1,76 @@
 require 'pry'
-
 class Game
 
-  attr_reader :board, :ship
+  attr_reader :player_board, :computer_board, :player_ships, :computer_ships
 
   def initialize
-    @board = Board.new
-    @ship = ship
-    @player_cruiser = Ship.new("Cruiser", 3)
-    @player_submarine = Ship.new("Submarine", 2)
+    @player_board = Board.new
+    @computer_board = Board.new
+    @player_ships = {
+      "Cruiser" => Ship.new("Cruiser", 3),
+      "Submarine" => Ship.new("Submarine", 2)
+    }
+    @computer_ships = {
+      "Cruiser" => Ship.new("Cruiser", 3),
+      "Submarine" => Ship.new("Submarine", 2)
+    }
   end
 
   def main_menu
-
-    until @input == "p" || @input == "q"
-      p "Welcome to BATTLESHIP"
-      p "Enter p to play. Enter q to quit."
-      print "> "
-      @input = gets.chomp.downcase
-      break if @input == 'q'
-    end
-
-    if @input == 'p'
-      game_setup
+    p "Welcome to BATTLESHIP"
+    p "Enter p to play. Enter q to quit."
+    print "> "
+    input = gets.chomp.downcase
+    if input == 'p'
+      #computer_place_ships
+      player_place_ships
+      #turn
+    elsif input == 'q'
+      exit
     else
+      p "You don't listen to directions, huh? Try again."
+      sleep 4.0 
+      main_menu
     end
-
   end
 
-  def game_setup
-
+  def player_place_ships
     puts "I have laid out my ships on the grid."
     puts "You now need to lay out your two ships."
     puts "The Cruiser is three units long and the Submarine is two units long"
-    puts @board.render
-
-    # @player_cruiser = Ship.new(cruiser, 3)
-    player_ship_place
-
+    puts @player_board.render(true)
+    player_cruiser
   end
 
-  def player_ship_place
-    # until @player_input == @board.valid_placement?(@player_cruiser, @player_input)
-    #   p "Those are invalid coordinates. Please try again:"
-    #   @player_input = []
-    #   puts "Time to enter the squares for the Cruiser (3 spaces): "
-    #   puts "Please enter your first square "
-    #   print "> "
-    #   square_1 = gets.chomp.upcase
-    #   @player_input << square_1
-    #   p "Please enter your second square "
-    #   print "> "
-    #   square_2 = gets.chomp.upcase
-    #   @player_input << square_2
-    #   p "Please enter your final square "
-    #   print "> "
-    #   square_3 = gets.chomp.upcase
-    #   @player_input << square_3
-    #   break if @board.valid_placement?(@player_cruiser, @player_input)
-    # end
-    @player_input = []
-    puts "Time to enter the squares for the Cruiser (3 spaces): "
-    puts "Please enter your first square "
+  def player_cruiser
+    puts "Enter the squares for the Cruiser (3 spaces): "
     print "> "
-    square_1 = gets.chomp.upcase!
-    @player_input << square_1
-    p "Please enter your second square "
-    print "> "
-    square_2 = gets.chomp.upcase!
-    @player_input << square_2
-    p "Please enter your final square "
-    print "> "
-    square_3 = gets.chomp.upcase!
-    @player_input << square_3
-
-    until @player_input == @board.valid_placement?(@player_cruiser, @player_input)
-      p "Those are invalid coordinates. Please try again: "
-      break if @board.valid_placement?(@player_cruiser, @player_input)
-    end
-    #
-    if @player_input == @board.valid_placement?(@player_cruiser, @player_input)
-      @board.place(@player_cruiser, @player_input)
-      puts @board.render(true)
-      puts "Enter the squares for the Submarine (2 spaces): "
+    cruiser_input = gets.chomp.upcase.split(" ")
+    if @player_board.valid_placement?(@player_ships["Cruiser"], cruiser_input)
+      @player_board.place(@player_ships["Cruiser"], cruiser_input)
+      puts @player_board.render(true)
+    else
+      puts "Those are invalid coordinates. Please try again: "
       print "> "
+      player_cruiser
     end
-    player_submarine_place
+    player_submarine
   end
 
-  def player_submarine_place
-    sub_input = gets.chomp.upcase
-    until sub_input == @board.valid_placement?(ship, coordinate_array)
-      p "Those are invalid coordinates. Please try again:"
+  def player_submarine
+    puts "Enter the squares for the Submarine (2 spaces): "
+    print "> "
+    submarine_input = gets.chomp.upcase.split(" ")
+    if @player_board.valid_placement?(@player_ships["Submarine"], submarine_input)
+      @player_board.place(@player_ships["Submarine"], submarine_input)
+      puts @player_board.render(true)
+    else
+      puts "Those are invalid coordinates. Please try again: "
+      print "> "
+      player_submarine
     end
-    if sub_input == @board.valid_placement?(ship, coordinate_array)
-      puts @board.render(true)
-    end
-    player_turn
   end
 
-  # def player_turn
-  #   loop do
-  #
-  # end
 
 
 
