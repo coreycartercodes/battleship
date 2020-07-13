@@ -5,13 +5,14 @@ class Board
   def initialize(rows = 4, columns = 4)
     @rows = rows
     @columns = columns
+    @number_range = (1..@columns).to_a
+    @letter_range = ("A"..(("A".ord)+ @rows - 1).chr).to_a
     @cells = build_cells
   end
 
   def build_cells
     cell_hash = {}
-    @number_range = 1..@columns
-    @letter_range = "A"..(("A".ord)+ @rows - 1).chr
+
 
     @number_range.each do |number|
       @letter_range.each do |letter|
@@ -27,8 +28,6 @@ class Board
   end
 
   def coord_array_setup
-    @board_row_array = @letter_range.to_a
-    @board_col_array = @number_range.to_a
     @row_array = @coordinate_array.map do |space|
       space.to_str[0]
     end
