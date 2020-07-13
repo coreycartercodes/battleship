@@ -1,8 +1,4 @@
-require './lib/ship'
-require './lib/cell'
-require './lib/board'
 require './lib/game'
-require './lib/player'
 require 'pry'
 
 game = Game.new

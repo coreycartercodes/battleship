@@ -1,7 +1,5 @@
 require './lib/ship'
-require './lib/cell'
 require './lib/board'
-require './lib/game'
 
 class Player
   attr_reader :board, :cruiser, :submarine

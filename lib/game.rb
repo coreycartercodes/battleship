@@ -3,28 +3,11 @@ require './lib/player'
 
 class Game
 
-  ### Corey's Player Class usage
   attr_reader :player, :computer
   def initialize
     @player = Player.new
     @computer= Player.new
   end
-  ###
-
-  # attr_reader :player_board, :computer_board, :player.submarine, :computer.cruiser
-  #
-  # def initialize
-  #   @player_board = Board.new
-  #   @computer_board = Board.new
-  #   @player_ships = {
-  #     "Cruiser" => Ship.new("Cruiser", 3),
-  #     "Submarine" => Ship.new("Submarine", 2)
-  #   }
-  #   @computer_ships = {
-  #     "Cruiser" => Ship.new("Cruiser", 3),
-  #     "Submarine" => Ship.new("Submarine", 2)
-  #   }
-  # end
 
   def main_menu
     puts "Welcome to BATTLESHIP"
