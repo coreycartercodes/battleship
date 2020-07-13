@@ -87,34 +87,34 @@ class BoardTest < Minitest::Test
   def test_board_render
     @board.place(@cruiser, ["A1", "A2", "A3"])
 
-    normal_render = " 1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . ."
+    normal_render = "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . ."
     assert_equal normal_render, @board.render
 
     @board.cells["A1"].fire_upon
     @board.cells["A2"].fire_upon
 
-    hit_render = " 1 2 3 4 \nA H H . . \nB . . . . \nC . . . . \nD . . . ."
+    hit_render = "  1 2 3 4 \nA H H . . \nB . . . . \nC . . . . \nD . . . ."
     assert_equal hit_render, @board.render
 
     @board.cells["A3"].fire_upon
-    sunk_render = " 1 2 3 4 \nA X X X . \nB . . . . \nC . . . . \nD . . . ."
+    sunk_render = "  1 2 3 4 \nA X X X . \nB . . . . \nC . . . . \nD . . . ."
     assert_equal sunk_render, @board.render
 
     @board.cells["B3"].fire_upon
-    miss_render = " 1 2 3 4 \nA X X X . \nB . . M . \nC . . . . \nD . . . ."
+    miss_render = "  1 2 3 4 \nA X X X . \nB . . M . \nC . . . . \nD . . . ."
     assert_equal miss_render, @board.render
   end
 
   def test_board_render_true
     @board.place(@cruiser, ["A1", "A2", "A3"])
 
-    normal_render = " 1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . ."
+    normal_render = "  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . ."
     assert_equal normal_render, @board.render(true)
 
     @board.cells["A1"].fire_upon
     @board.cells["A2"].fire_upon
 
-    hit_render = " 1 2 3 4 \nA H H S . \nB . . . . \nC . . . . \nD . . . ."
+    hit_render = "  1 2 3 4 \nA H H S . \nB . . . . \nC . . . . \nD . . . ."
     assert_equal hit_render, @board.render(true)
   end
 end
