@@ -1,4 +1,3 @@
-#Ship Class
 require 'pry'
 class Ship
   attr_reader :name, :length, :health

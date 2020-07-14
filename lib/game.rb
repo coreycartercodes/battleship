@@ -84,6 +84,7 @@ class Game
       puts "\n"
       main_menu
     end
+    sleep 1
     turn
   end
 

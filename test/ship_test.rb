@@ -1,4 +1,3 @@
-#Ship Class Test
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/ship'
