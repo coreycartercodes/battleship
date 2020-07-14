@@ -16,7 +16,7 @@ class Game
     puts "\n"
     input = gets.chomp.downcase
     if input == 'p'
-      #computer_place_ships
+      @computer.cpu_ship_placement
       player_place_ships
     elsif input == 'q'
       puts "Okay, quitter \u{1f644}"
@@ -35,6 +35,7 @@ class Game
     puts "You now need to lay out your two ships."
     puts "The Cruiser is three units long and the Submarine is two units long"
     puts @player.board.render(true)
+    player_cruiser
   end
 
   def player_cruiser
@@ -73,12 +74,12 @@ class Game
       puts "You won: game over"
       exit
     end
-    #@player.computer_turn
+    # @player.computer_turn
   end
 
   def display_boards
     puts "=============COMPUTER BOARD============="
-    puts @computer.board.render
+    puts @computer.board.render(true)
     puts "                "
     puts "==============PLAYER BOARD=============="
     puts @player.board.render(true)
