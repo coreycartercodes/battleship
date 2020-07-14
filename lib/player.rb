@@ -10,12 +10,21 @@ class Player
     @submarine = Ship.new("Submarine", 2)
   end
 
-  def cpu_ship_placement
-    @cpu_place = @board.cells.keys.shuffle[0..2]
-    if @board.valid_placement?(@cruiser, @cpu_place)
-      @board.place(@cruiser, @cpu_place)
+  def cruiser_placement
+    @cruiser_place = @board.cells.keys.shuffle[0..2]
+    if @board.valid_placement?(@cruiser, @cruiser_place)
+      @board.place(@cruiser, @cruiser_place)
     else
-      cpu_ship_placement
+      cruiser_placement
+    end
+  end
+
+  def sub_placement
+    @sub_place = @board.cells.keys.shuffle[0..1]
+    if @board.valid_placement?(@submarine, @sub_place)
+      @board.place(@submarine, @sub_place)
+    else
+      sub_placement
     end
   end
 
