@@ -16,7 +16,8 @@ class Game
     puts "\n"
     input = gets.chomp.downcase
     if input == 'p'
-      @computer.cpu_ship_placement
+      @computer.cruiser_placement
+      @computer.sub_placement
       player_place_ships
     elsif input == 'q'
       puts "Okay, quitter \u{1f644}"
@@ -50,8 +51,9 @@ class Game
       print "\u{1f6a2}  "
       player_cruiser
     end
+    player_submarine
   end
-
+  #### It is placing 2 submarines again.
   def player_submarine
     puts "Enter the squares for the Submarine (2 spaces): "
     print "\u{1f6a2}  "
@@ -64,6 +66,7 @@ class Game
       puts "\u{1f644} \u{1f644} \u{1f644}"
       player_submarine
     end
+    turn
   end
 
   def turn
@@ -72,9 +75,16 @@ class Game
     if @computer.cruiser.sunk? && @computer.submarine.sunk?
       puts "You beat a computer *woooooow*"
       puts "You won: game over"
-      exit
+      puts "\n"
+      main_menu
     end
-    # @player.computer_turn
+    @player.computer_turn
+    if @player.cruiser.sunk? && @player.submarine.sunk?
+      puts "VICTORY IS MINE!"
+      puts "\n"
+      main_menu
+    end
+    turn
   end
 
   def display_boards
@@ -84,8 +94,5 @@ class Game
     puts "==============PLAYER BOARD=============="
     puts @player.board.render(true)
   end
-
-
-
 
 end
