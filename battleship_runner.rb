@@ -1,5 +1,4 @@
 require './lib/game'
-require 'pry'
 
 game = Game.new
 
