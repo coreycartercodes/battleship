@@ -49,7 +49,6 @@ class Board
   end
 
   def valid_placement?(ship, coordinate_array)
-    coordinate_array = coordinate_array
     if different_lengths(ship, coordinate_array)
       false
     elsif invalid_coordinate_array(coordinate_array)
