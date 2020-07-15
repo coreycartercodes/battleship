@@ -18,7 +18,7 @@ class GameTest < Minitest::Test
     assert_instance_of Game, @game
   end
 
-  def test_welcome_message
+  def test_welcome_message #need to change this to have an assertion, just printing the main menu right now 
     p @game.main_menu
   end
 
