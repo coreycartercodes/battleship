@@ -1,4 +1,4 @@
-require './lib/cell'
+require './lib/cell' #do we need this? Is there a way to call it without requiring the file?
 
 class Board
 
@@ -37,16 +37,6 @@ class Board
     end
   end
 
-
-  #   def array_increments?(coordinate_array)
-  #     first_num = coordinate_array[0].ord
-  #     coordinate_array[1, coordinate_array.count].each do |n|
-  #       return false if first_num + 1 != n
-  #       first_num = n
-  #     end
-  #     true
-  #   end
-
   def horizontal?(coordinate_array)
     @coordinate_array.map {|coordinate| coordinate[0]}.uniq.count == 1
   end
@@ -65,7 +55,6 @@ class Board
     else
       false
     end
-
   end
 
   def valid_placement?(ship, coordinate_array)
