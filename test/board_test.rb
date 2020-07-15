@@ -3,7 +3,6 @@ require 'minitest/pride'
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
-require 'pry'
 
 class BoardTest < Minitest::Test
   def setup
@@ -91,7 +90,7 @@ class BoardTest < Minitest::Test
     assert_equal @cruiser, cell_1.ship
     assert_equal @cruiser, cell_2.ship
     assert_equal @cruiser, cell_3.ship
-    assert_equal true, cell_3.ship == cell_2.ship
+    assert cell_3.ship == cell_2.ship
   end
 
   def test_board_render

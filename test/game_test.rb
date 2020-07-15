@@ -4,8 +4,7 @@ require './lib/ship'
 require './lib/cell'
 require './lib/board'
 require './lib/game'
-require './lib/message'
-require 'pry'
+
 
 class GameTest < Minitest::Test
 
@@ -23,4 +22,12 @@ class GameTest < Minitest::Test
     p @game.main_menu
   end
 
+  #test both player and cpu have boards
+  #test both player and cpu have ships
+  #test cpu can place both ships
+  #test player can place both ships
+  #test player shot
+  #test cpu shot
+  #test cpu win
+  #test player win
 end

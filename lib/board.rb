@@ -46,7 +46,6 @@ class Board
     else
       false
     end
-
   end
 
   def valid_placement?(ship, coordinate_array)

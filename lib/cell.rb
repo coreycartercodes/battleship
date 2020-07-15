@@ -22,7 +22,6 @@ class Cell
   def fire_upon
     case ship
     when nil
-      #May need to add "Miss" here
       @fired_upon = true
     else
       @fired_upon = true

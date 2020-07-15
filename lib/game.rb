@@ -74,8 +74,8 @@ class Game
 
   def display_boards
     puts "=============COMPUTER BOARD============="
-    puts @computer.board.render(true)
-    puts "                "
+    puts @computer.board.render
+    puts "\n"
     puts "==============PLAYER BOARD=============="
     puts @player.board.render(true)
   end
