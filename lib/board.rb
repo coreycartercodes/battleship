@@ -7,16 +7,16 @@ class Board
   def initialize(rows = 4, columns = 4)
     @rows = rows
     @columns = columns
-    @number_range = (1..@columns).to_a
-    @letter_range = ("A"..(("A".ord)+ @rows - 1).chr).to_a
-    @cells = build_cells
+    number_range = (1..columns).to_a
+    letter_range = ("A"..(("A".ord)+ rows - 1).chr).to_a
+    @cells = build_cells(number_range, letter_range)
   end
 
-  def build_cells
+  def build_cells(number_range, letter_range)
     cell_hash = {}
 
-    @number_range.each do |number|
-      @letter_range.each do |letter|
+    number_range.each do |number|
+      letter_range.each do |letter|
         coordinate = letter + number.to_s
         cell_hash[coordinate] = Cell.new(coordinate)
       end
@@ -28,39 +28,20 @@ class Board
     @cells.keys.to_s.include?(coordinate_param)
   end
 
-  def coord_array_setup
-    @row_array = @coordinate_array.map do |space|
-      space.to_str[0]
-    end
-    @col_array = @coordinate_array.map do |space|
-      space.to_str[1].to_i
-    end
-  end
-
-
-  #   def array_increments?(coordinate_array)
-  #     first_num = coordinate_array[0].ord
-  #     coordinate_array[1, coordinate_array.count].each do |n|
-  #       return false if first_num + 1 != n
-  #       first_num = n
-  #     end
-  #     true
-  #   end
-
   def horizontal?(coordinate_array)
-    @coordinate_array.map {|coordinate| coordinate[0]}.uniq.count == 1
+    coordinate_array.map {|coordinate| coordinate[0]}.uniq.count == 1
   end
 
   def vertical?(coordinate_array)
-    @coordinate_array.map {|coordinate| coordinate[1]}.uniq.count == 1
+    coordinate_array.map {|coordinate| coordinate[1]}.uniq.count == 1
   end
 
   def consecutive_spaces?(coordinate_array)
     if horizontal?(coordinate_array)
-      nums = @coordinate_array.map {|coordinate| coordinate[1].to_i}
+      nums = coordinate_array.map {|coordinate| coordinate[1].to_i}
       nums.each_cons(2).all? {|x, y| y == x + 1}
     elsif vertical?(coordinate_array)
-      nums = @coordinate_array.map {|coordinate| coordinate[0].ord}
+      nums = coordinate_array.map {|coordinate| coordinate[0].ord}
       nums.each_cons(2).all? {|x, y| y == x + 1}
     else
       false
@@ -69,7 +50,7 @@ class Board
   end
 
   def valid_placement?(ship, coordinate_array)
-    @coordinate_array = coordinate_array
+    coordinate_array = coordinate_array
     if different_lengths(ship, coordinate_array)
       false
     elsif invalid_coordinate_array(coordinate_array)
