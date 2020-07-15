@@ -15,9 +15,7 @@ class Game
     puts "\n"
     input = gets.chomp.downcase
     if input == 'p'
-      @computer.cruiser_placement
-      @computer.sub_placement
-      player_place_ships
+      run_game
     elsif input == 'q'
       puts "Okay, quitter \u{1f644}"
       puts "\n"
@@ -30,12 +28,20 @@ class Game
     end
   end
 
+  def run_game
+    @computer.cruiser_placement
+    @computer.sub_placement
+    player_place_ships
+    player_cruiser
+    player_submarine
+    turn
+  end
+
   def player_place_ships
     puts "I have laid out my ships on the grid."
     puts "You now need to lay out your two ships."
     puts "The Cruiser is three units long and the Submarine is two units long"
     puts @player.board.render(true)
-    player_cruiser
   end
 
   def player_cruiser
@@ -50,7 +56,6 @@ class Game
       print "\u{1f6a2}  "
       player_cruiser
     end
-    player_submarine
   end
 
   def player_submarine
@@ -65,26 +70,6 @@ class Game
       puts "\u{1f644} \u{1f644} \u{1f644}"
       player_submarine
     end
-    turn
-  end
-
-  def turn
-    display_boards
-    @computer.player_turn
-    if @computer.cruiser.sunk? && @computer.submarine.sunk?
-      puts "You beat a computer *woooooow*"
-      puts "You won: game over"
-      puts "\n"
-      main_menu
-    end
-    @player.computer_turn
-    if @player.cruiser.sunk? && @player.submarine.sunk?
-      puts "VICTORY IS MINE!"
-      puts "\n"
-      main_menu
-    end
-    sleep 1
-    turn
   end
 
   def display_boards
@@ -95,4 +80,34 @@ class Game
     puts @player.board.render(true)
   end
 
+  def cpu_winner
+    @player.cruiser.sunk? && @player.submarine.sunk?
+  end
+
+  def player_winner
+    @computer.cruiser.sunk? && @computer.submarine.sunk?
+  end
+
+  def turn
+    until cpu_winner || player_winner
+      display_boards
+      @computer.player_turn
+      @player.computer_turn
+      sleep 1
+      turn
+    end
+
+    if player_winner
+      puts "You beat a computer *woooooow*"
+      puts "You won: game over"
+      puts "\n"
+      main_menu
+    end
+    
+    if cpu_winner
+      puts "VICTORY IS MINE!"
+      puts "\n"
+      main_menu
+    end
+  end
 end

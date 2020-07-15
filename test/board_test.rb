@@ -49,7 +49,17 @@ class BoardTest < Minitest::Test
     assert @board.valid_placement?(@cruiser, ["A2", "A3", "A4"])
   end
 
-  def test_consecutive_coordinates
+  def test_horizontal?
+    assert @board.horizontal?(["A1", "A2", "A3"])
+    refute @board.horizontal?(["A1", "B1", "C1"])
+  end
+
+  def test_vertical?
+    refute @board.vertical?(["A1", "A2", "A3"])
+    assert @board.vertical?(["A1", "B1", "C1"])
+  end
+
+  def test_consecutive_spaces
     refute @board.valid_placement?(@cruiser, ["A1", "A2", "A4"])
     refute @board.valid_placement?(@cruiser, ["A2", "A1", "A4"])
     refute @board.valid_placement?(@cruiser, ["A3", "A2", "A1"])
