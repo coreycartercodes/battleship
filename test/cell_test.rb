@@ -2,7 +2,6 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/ship'
 require './lib/cell'
-require 'pry'
 
 class CellTest < Minitest::Test
   def setup
@@ -46,7 +45,7 @@ class CellTest < Minitest::Test
     assert_equal 2, @cell1.ship.health
   end
 
-  def test_render         #Should we break this up?
+  def test_render 
 
     @cell1.place_ship(@cruiser)
     assert_equal ".", @cell1.render
