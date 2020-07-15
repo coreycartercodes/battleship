@@ -1,7 +1,6 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/ship'
-require 'pry'
 
 class ShipTest < Minitest::Test
   def setup
@@ -25,7 +24,7 @@ class ShipTest < Minitest::Test
   end
 
   def test_if_it_has_sunk
-    assert_equal false, @cruiser.sunk?
+    refute @cruiser.sunk?
   end
 
   def test_health_change_after_hit
@@ -37,20 +36,20 @@ class ShipTest < Minitest::Test
   def test_sunk_after_hit
     @cruiser.hit
 
-    assert_equal false, @cruiser.sunk?
+    refute @cruiser.sunk?
   end
 
   def test_sunk_after_three_hit
     @cruiser.hit
 
-    assert_equal false, @cruiser.sunk?
+    refute @cruiser.sunk?
 
     @cruiser.hit
 
-    assert_equal false, @cruiser.sunk?
+    refute @cruiser.sunk?
 
     @cruiser.hit
 
-    assert_equal true, @cruiser.sunk?
+    assert @cruiser.sunk?
   end
 end

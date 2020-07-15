@@ -1,4 +1,3 @@
-require 'pry'
 require './lib/player'
 
 class Game
@@ -53,7 +52,7 @@ class Game
     end
     player_submarine
   end
-  #### It is placing 2 submarines again.
+
   def player_submarine
     puts "Enter the squares for the Submarine (2 spaces): "
     print "\u{1f6a2}  "
@@ -90,8 +89,8 @@ class Game
 
   def display_boards
     puts "=============COMPUTER BOARD============="
-    puts @computer.board.render(true)
-    puts "                "
+    puts @computer.board.render
+    puts "\n"
     puts "==============PLAYER BOARD=============="
     puts @player.board.render(true)
   end
