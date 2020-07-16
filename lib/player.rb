@@ -1,8 +1,6 @@
 require './lib/ship'
 require './lib/board'
 
-#do we need a player_test file?
-
 class Player
   attr_reader :board, :cruiser, :submarine
 
@@ -53,7 +51,7 @@ class Player
         puts "Your shot on #{input} was a hit...lucky guess"
         puts "\n"
       elsif @board.cells[input].render == "X"
-        puts "Welp. Your shot on #{input} sunk my ship." #do we want to call the actual ship name here?
+        puts "Welp. Your shot on #{input} sunk my ship."
         puts "I hope you're happy \u{1f62d}"
         puts "\n"
       end
@@ -73,7 +71,7 @@ class Player
         puts "My shot on #{cpu_shot} was a hit! You got, got!"
         puts "\n"
       elsif @board.cells[cpu_shot].render == "X"
-        puts "MUAHAHA! My shot on #{cpu_shot} sunk your ship." #do we want to call the actual ship name here?
+        puts "MUAHAHA! My shot on #{cpu_shot} sunk your ship."
         puts "BOOMSHAKALAKA!"
         puts "\n"
       end
