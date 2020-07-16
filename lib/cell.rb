@@ -59,6 +59,4 @@ class Cell
       render_fire_upon_helper
     end
   end
-
-
 end
