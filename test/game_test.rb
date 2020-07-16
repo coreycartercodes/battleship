@@ -4,30 +4,32 @@ require './lib/ship'
 require './lib/cell'
 require './lib/board'
 require './lib/game'
-
+require './lib/player'
 
 class GameTest < Minitest::Test
 
   def setup
     @game = Game.new
-    @player_board = Board.new
-    @cpu_board = Board.new
+    @player = Player.new
+    @computer= Player.new
   end
 
   def test_it_exists
     assert_instance_of Game, @game
   end
 
-  def test_welcome_message #need to change this to have an assertion, just printing the main menu right now 
-    p @game.main_menu
+  def test_cpu_can_win
+    3.times {@game.player.cruiser.hit}
+    2.times {@game.player.submarine.hit}
+
+    assert @game.cpu_winner
   end
 
-  #test both player and cpu have boards
-  #test both player and cpu have ships
-  #test cpu can place both ships
-  #test player can place both ships
-  #test player shot
-  #test cpu shot
-  #test cpu win
-  #test player win
+  def test_player_can_win
+    3.times {@game.computer.cruiser.hit}
+    2.times {@game.computer.submarine.hit}
+
+    assert @game.player_winner
+  end
+
 end
