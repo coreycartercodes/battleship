@@ -89,25 +89,23 @@ class Game
   end
 
   def turn
-    until cpu_winner || player_winner
-      display_boards
+    display_boards
       @computer.player_turn
+      if player_winner
+        puts "You beat a computer *woooooow*"
+        puts "You won: game over"
+        puts "\n"
+        initialize
+        main_menu
+      end
       @player.computer_turn
+      if cpu_winner
+        puts "VICTORY IS MINE!"
+        puts "\n"
+        initialize
+        main_menu
+      end
       sleep 1
       turn
     end
-
-    if player_winner
-      puts "You beat a computer *woooooow*"
-      puts "You won: game over"
-      puts "\n"
-      main_menu
-    end
-    
-    if cpu_winner
-      puts "VICTORY IS MINE!"
-      puts "\n"
-      main_menu
-    end
-  end
 end
